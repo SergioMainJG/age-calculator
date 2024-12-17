@@ -1,0 +1,16 @@
+{
+  "name": "age-calculator",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 8080",
+    "build": "tsc && vite build --minify esbuild",
+    "optimize": "vite optimize",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.2",
+    "vite": "^6.0.1"
+  }
+}
