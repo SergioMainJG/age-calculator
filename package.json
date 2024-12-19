@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --port 8080",
     "build": "tsc && vite build --minify esbuild",
-    "optimize": "vite optimize",
+    "optimize": "vite optimize --force",
     "preview": "vite preview"
   },
   "devDependencies": {

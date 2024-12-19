@@ -27,23 +27,19 @@ function calculateAge(birthdate: Date): [string, string, string] {
             today.getUTCFullYear()
         ];
 
-    let yearAge: number;
-    let monthAge: number;
-    let dayAge: number;
+    let yearAge: number = yearToday - yearBirthdate;
+    let monthAge: number = monthToday - monthBirthdate;
+    let dayAge: number = dayToday - dayBirthdate;
 
     if ((monthToday === monthBirthdate) && (dayToday > dayBirthdate)) {
-        yearAge = yearToday - yearBirthdate;
-        monthAge = monthToday - monthBirthdate;
         dayAge = dayToday - dayBirthdate;
     }
-    else if ((monthToday === monthBirthdate) && ( dayToday === dayBirthdate)) {
-        yearAge = yearToday - yearBirthdate;
-        monthAge = monthToday - monthBirthdate;
+    if ((monthToday === monthBirthdate) && (dayToday === dayBirthdate)) {
         dayAge = 0;
     }
-    else{
-        yearAge = yearToday - yearBirthdate -1;
-        monthAge = 12 + monthToday - monthBirthdate -1;
+    if ((monthToday === monthBirthdate) && (dayToday < dayBirthdate)) {
+        yearAge = yearToday - yearBirthdate - 1;
+        monthAge = 12 + monthToday - monthBirthdate - 1;
         dayAge = 30 + dayToday - dayBirthdate;
     }
 
@@ -63,10 +59,32 @@ calculateButton.addEventListener('click', () => {
     const birthdate: HTMLInputElement = document.querySelector('#user-birthdate') as HTMLInputElement;
     const output: HTMLElement = document.querySelector('#output-birthdate') as HTMLElement;
     output.innerHTML = '';
-    const date = new Date(birthdate.value);
+    const inputDate = new Date(birthdate.value);
+    const finalLimitDate = new Date('2023-12-31T00:00:00');
+    const initLimitDate = new Date('1970-01-01T00:00:00.000Z');
+    const [
+        limitInitYear,
+        limitFinalYear,
+        inputYear,
+    ] = [
+            initLimitDate.getUTCFullYear(),
+            finalLimitDate.getUTCFullYear(),
+            inputDate.getUTCFullYear()
+        ];
+
+    if (inputYear > limitFinalYear){
+        output.innerText = 'You need put a valid date equal or under than: ' + formatterDate( finalLimitDate );
+        return;
+        
+    }
+    if ( inputYear < limitInitYear ) {
+        output.innerText = 'You need put a valid date equal or major than: ' + formatterDate( initLimitDate );
+        return;
+    }
+
     let age: [string, string, string] = ['', '', ''];
-    if (date.toString() === 'Invalid Date') age = ['You need put a valid date', '', ''];
-    else age = calculateAge(date);
+    if (inputDate.toString() === 'Invalid Date') age = ['You need put a valid date', '', ''];
+    else age = calculateAge(inputDate);
 
     const todayOutput = document.createElement('h3');
     const birthdateOutput = document.createElement('h3');
